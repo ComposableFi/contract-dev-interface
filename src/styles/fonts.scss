@@ -1,0 +1,108 @@
+@font-face {
+  font-family: 'Metropolis';
+  src: url('/fonts/Metropolis-Regular.otf');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Wavehaus';
+  src: url('/fonts/Wavehaus-95SemiBold.otf');
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Wavehaus';
+  src: url('/fonts/Wavehaus-66Book.otf');
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+}
+
+@layer base {
+  html {
+    @apply font-wavehaus text-white;
+  }
+  h1, h2, h3, h4 {
+    @apply font-metropolis font-[400];
+  }
+  h5, h6, caption, input, label {
+    @apply font-[600];
+  }
+
+  h1 {
+    @apply text-[96px] leading-[120%];
+  }
+  h2 {
+    @apply text-[72px] leading-[120%];
+  }
+
+  h3 {
+    @apply text-[64px] leading-[120%];
+  }
+
+  h4 {
+    @apply text-[48px] leading-[140%];
+  }
+
+  h5 {
+    @apply text-[36px] leading-[160%];
+  }
+
+  h6 {
+    @apply text-[24px] leading-[160%];
+  }
+
+  p {
+    @apply text-[20px] leading-[160%] font-[500];
+    &.caption {
+      @apply text-[14px] leading-[160%];
+    }
+    &.body-1 {
+      //	only paragraph spacing difference - add margins if needed
+    }
+    &.body-2 {
+      @apply text-[18px] leading-[160%];
+    }
+    &.body-3 {
+      @apply text-[16px] leading-[160%];
+    }
+    &.bold, span.bold {
+      @apply font-[600];
+    }
+    &.subtitle {
+      @apply text-[24px] font-[600] leading-[160%];
+    }
+    &.helper {
+      @apply text-[14px] leading-[160%] font-[600];
+    }
+  }
+  caption {
+    @apply text-[14px] leading-[160%];
+  }
+  label {
+    @apply text-[12px] leading-[160%];
+    &.input {
+      @apply font-[600] text-[18px] leading-[160%]
+    }
+  }
+  input {
+    @apply text-[20px] leading-[160%];
+  }
+  button, div {
+    p, input {
+      &.large {
+        @apply text-[20px] leading-[140%];
+      }
+      &.medium {
+        @apply text-[18px] leading-[160%];
+      }
+      &.small {
+        @apply text-[16px] leading-[160%];
+      }
+    }
+  }
+}

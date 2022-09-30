@@ -1,0 +1,5 @@
+.next
+.husky
+node_modules
+generated
+out

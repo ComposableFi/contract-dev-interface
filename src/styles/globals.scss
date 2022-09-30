@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@import "./fonts.scss";
+@import "./defaults.scss";
+@import "./scrollbar";
+
+
+@import "./utils.scss";
+@import "./backgrounds.scss";
+
+
+@import "./overrides.scss";
+@import "./custom.scss";
+@tailwind utilities;
+@tailwind variants;

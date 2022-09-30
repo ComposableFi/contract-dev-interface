@@ -1,0 +1,33 @@
+@layer utilities {
+  .transform-vertical-force {
+    transform: rotate(90deg) translate3d(0,-0.5px,0) !important;
+  }
+
+  .filter-white {
+    filter: brightness(0%) invert(100%);
+  }
+  .filter-hexplore {
+    filter: brightness(0%) invert(31%) sepia(59%) saturate(5902%) hue-rotate(242deg) brightness(101%) contrast(99%);
+  }
+  .filter-explore {
+    filter: brightness(0%) invert(60%) sepia(88%) saturate(4232%) hue-rotate(223deg) brightness(103%) contrast(99%);
+  }
+  .rowLoading-animation {
+    background: linear-gradient(115.68deg, #150a0e -16.61%, #1c1115 109.1%);
+    background-size: 800px 100px;
+    animation-name: moving-gradient;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+  }
+}
+
+@-webkit-keyframes moving-gradient {
+  0% {
+    background-position: -400px 0;
+  }
+  100% {
+    background-position: 400px 0;
+  }
+}

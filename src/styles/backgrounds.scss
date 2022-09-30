@@ -1,0 +1,5 @@
+@layer components {
+  .bg-deep-catch {
+    background: radial-gradient(97.33% 97.33% at 50% 50%, rgba(17, 17, 17, 0.12) 0%, rgba(222, 103, 29, 0) 100%) /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */, linear-gradient(115.68deg, #0D0D0D -16.61%, #150522 109.1%, #020202 109.1%);
+  }
+}
