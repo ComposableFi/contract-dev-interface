@@ -1,8 +1,9 @@
 import clsx from 'clsx';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { SVGXCVMLogo } from '@/svg';
+import { SVGComposableLight } from '@/svg';
 import Head from 'next/head';
+import { Img } from '@/components/common/Img';
 
 export const Header = () => {
 	const router = useRouter();
@@ -19,7 +20,11 @@ export const Header = () => {
 			<div className="mx-auto flex w-full items-center justify-between px-10 py-[33.5px] lg:w-lg lg:px-[6px]">
 				<Link href="/" passHref>
 					<a className={clsx('flex items-center gap-4', { 'pointer-events-none': router.pathname === '/' })}>
-						<SVGXCVMLogo />
+						<SVGComposableLight />
+						<div className="mb-1 flex items-center gap-4">
+							<p className="font-wavehaus text-[25px]">x</p>
+							<Img className="w-10" src="/icons/external/cosmwasm_logo.png" />
+						</div>
 						<figure className="h-6 w-[1px] bg-titanium.3" />
 						<p className="font-metropolis text-[25px]">contract dev interface</p>
 					</a>
