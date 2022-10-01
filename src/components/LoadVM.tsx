@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import { DisplayJson } from '@/components/common/DisplayJson';
 import { cloneDeep, reverse } from 'lodash';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
+import { RawSingleInput } from '@/components/common/Input';
+import { useForm } from 'react-hook-form';
 
 let loaded = false;
 const run = false;
@@ -46,45 +48,101 @@ export const LoadVM = () => {
 			{!executed && <p>loading...</p>}
 			{executed && (
 				<>
-					<div className="flex items-center justify-center gap-4">
-						<button
-							className="rounded-xl border border-explore p-4 transition-opacity duration-200 hover:opacity-80"
-							onClick={() =>
-								instantiate(pushState, pushEvent, states, {
-									name: 'Picasso',
-									symbol: 'PICA',
-									decimals: 12,
-									initial_balances: [],
-									mint: {
-										minter: String(sender),
-										cap: null,
-									},
-									marketing: null,
-								})
-							}>
-							<p>INSTANTIATE</p>
-						</button>
-						<button
-							className="rounded-xl border border-explore p-4 transition-opacity duration-200 hover:opacity-80"
-							onClick={() =>
-								execute(pushState, pushEvent, states, {
-									mint: {
-										recipient: '10001',
-										amount: '5555',
-									},
-								})
-							}>
-							<p>EXECUTE</p>
-						</button>
-						<button
-							className="rounded-xl border border-explore p-4 transition-opacity duration-200 hover:opacity-80"
-							onClick={() => getTokenInfo(states)}>
-							<p>QUERY</p>
-						</button>
-					</div>
+					<Interactions states={states} pushState={pushState} pushEvent={pushEvent} />
 					<DisplayData states={states} events={events} />
 				</>
 			)}
+		</div>
+	);
+};
+
+interface Inputs {
+	recipient: string;
+	amount: string;
+}
+
+const Interactions = ({ pushEvent, pushState, states }) => {
+	const {
+		getValues: getFormValues,
+		register,
+		setValue,
+		watch,
+	} = useForm<Inputs>({
+		mode: 'all',
+		defaultValues: {
+			recipient: '10001',
+			amount: '5555',
+		},
+	});
+
+	const onEnter = () => {
+		const values = getFormValues();
+		console.log(values);
+		execute(pushState, pushEvent, states, {
+			mint: {
+				recipient: values.recipient,
+				amount: values.amount,
+			},
+		});
+	};
+
+	return (
+		<div className="flex flex-col items-center gap-5">
+			<div className="grid w-full grid-cols-2 gap-2">
+				<div>
+					<p>recipient</p>
+					<RawSingleInput
+						getFormValues={getFormValues}
+						setValue={setValue}
+						watch={watch}
+						register={register}
+						placeholder=""
+						onEnter={onEnter}
+						property="recipient"
+					/>
+				</div>
+				<div>
+					<p>Amount</p>
+					<RawSingleInput
+						getFormValues={getFormValues}
+						setValue={setValue}
+						watch={watch}
+						register={register}
+						placeholder=""
+						onEnter={onEnter}
+						property="amount"
+					/>
+				</div>
+			</div>
+			<div className="flex items-center justify-center gap-4">
+				<button
+					className="rounded-xl border border-explore p-4 transition-opacity duration-200 hover:opacity-80"
+					onClick={() =>
+						instantiate(pushState, pushEvent, states, {
+							name: 'Picasso',
+							symbol: 'PICA',
+							decimals: 12,
+							initial_balances: [],
+							mint: {
+								minter: String(sender),
+								cap: null,
+							},
+							marketing: null,
+						})
+					}>
+					<p>INSTANTIATE</p>
+				</button>
+				<button
+					className="rounded-xl border border-explore p-4 transition-opacity duration-200 hover:opacity-80"
+					onClick={() => onEnter()}>
+					<p>EXECUTE</p>
+				</button>
+				<button
+					className="rounded-xl border border-explore p-4 transition-opacity duration-200 hover:opacity-80"
+					onClick={() => getTokenInfo(states)}>
+					<p>QUERY</p>
+				</button>
+			</div>
 		</div>
 	);
 };
