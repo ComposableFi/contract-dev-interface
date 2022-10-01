@@ -15,10 +15,9 @@ let code;
 
 export const LoadVM = () => {
 	const [executed, setExecuted] = useState(false);
+
 	const [states, setStates] = useState([]);
 	const [events, setEvents] = useState([]);
-	const [ref] = useAutoAnimate<HTMLDivElement>();
-	const [ref2] = useAutoAnimate<HTMLDivElement>();
 
 	const pushState = newState => {
 		setStates(prevState => {
@@ -83,35 +82,43 @@ export const LoadVM = () => {
 							<p>QUERY</p>
 						</button>
 					</div>
-					<div className="grid w-full grid-cols-[1fr,fit-content(100%)] gap-2">
-						<div
-							ref={ref}
-							className="mt-5 flex w-full w-full min-w-[500px] flex-col items-center gap-5 rounded-xl border border-hexplore px-8 py-5">
-							<p className="w-full text-center font-metropolis text-[20px]">State Updates</p>
-							{reverse(
-								cloneDeep(states).map((state, i) => (
-									<div key={`state_${i}`}>
-										<DisplayJson data={parseState(state)} />
-									</div>
-								))
-							)}
-						</div>
-						<div
-							ref={ref2}
-							className="mt-5 flex h-fit w-full w-full min-w-[419px] flex-col items-center gap-5 rounded-xl border border-hexplore px-8 py-5">
-							<p className="w-full text-center font-metropolis text-[20px]">Latest Event</p>
-							{reverse(
-								cloneDeep(events).map((event, i) => (
-									<div key={`event_${i}`}>
-										<DisplayJson data={event} />
-									</div>
-								))
-							)}
-							{events.length === 0 && <p>Empty Ser</p>}
-						</div>
-					</div>
+					<DisplayData states={states} events={events} />
 				</>
 			)}
+		</div>
+	);
+};
+
+const DisplayData = ({ states, events }) => {
+	const [ref] = useAutoAnimate<HTMLDivElement>();
+	const [ref2] = useAutoAnimate<HTMLDivElement>();
+	return (
+		<div className="grid w-full grid-cols-[minmax(40vw,100vw),minmax(40vw,100vw)] gap-2">
+			<div
+				ref={ref}
+				className="mt-5 flex w-full w-full min-w-[500px] flex-col items-center gap-5 rounded-xl border border-hexplore px-8 py-5">
+				<p className="w-full text-center font-metropolis text-[20px]">State Updates</p>
+				{reverse(
+					cloneDeep(states).map((state, i) => (
+						<div key={`state_${i}`}>
+							<DisplayJson data={parseState(state)} />
+						</div>
+					))
+				)}
+			</div>
+			<div
+				ref={ref2}
+				className="mt-5 flex h-fit w-full w-full min-w-[419px] flex-col items-center gap-5 rounded-xl border border-hexplore px-8 py-5">
+				<p className="w-full text-center font-metropolis text-[20px]">Latest Event</p>
+				{reverse(
+					cloneDeep(events).map((event, i) => (
+						<div key={`event_${i}`}>
+							<DisplayJson data={event} />
+						</div>
+					))
+				)}
+				{events.length === 0 && <p>Empty Ser</p>}
+			</div>
 		</div>
 	);
 };

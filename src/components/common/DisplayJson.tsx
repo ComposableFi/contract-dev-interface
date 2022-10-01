@@ -11,7 +11,7 @@ export const DisplayJson: FunctionComponent<{ data: any; collapseStringsAfterLen
 	return (
 		<ReactJson
 			shouldCollapse={key => {
-				if (key.name === 'codes' || key.name === 'data') return true;
+				if (key.name === 'codes') return true;
 				return false;
 			}}
 			theme="monokai"
