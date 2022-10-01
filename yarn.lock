@@ -596,6 +596,10 @@ core-js-pure@^3.25.1:
   resolved "https://registry.yarnpkg.com/core-js-pure/-/core-js-pure-3.25.3.tgz#66ac5bfa5754b47fdfd14f3841c5ed21c46db608"
   integrity sha512-T/7qvgv70MEvRkZ8p6BasLZmOVYKzOaWNBEHAU8FmveCJkl4nko2quqPQOmy6AJIp5MBanhz9no3A94NoRb0XA==
 
+"cosmwebwasm@https://gitpkg.now.sh/hussein-aitlahcen/cosmwebwasm/pkg":
+  version "0.1.0"
+  resolved "https://gitpkg.now.sh/hussein-aitlahcen/cosmwebwasm/pkg#7bfe731a9fd1d27f88d801e2c7bdabfeaeb9aa31"
+
 cross-fetch@^3.1.5:
   version "3.1.5"
   resolved "https://registry.yarnpkg.com/cross-fetch/-/cross-fetch-3.1.5.tgz#e1389f44d9e7ba767907f7af8454787952ab534f"
