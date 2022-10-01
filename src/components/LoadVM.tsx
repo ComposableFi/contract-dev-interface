@@ -90,7 +90,7 @@ const Interactions = ({ pushEvent, pushState, states }) => {
 		<div className="flex flex-col items-center gap-5">
 			<div className="grid w-full grid-cols-2 gap-2">
 				<div>
-					<p>recipient</p>
+					<p>Recipient</p>
 					<RawSingleInput
 						getFormValues={getFormValues}
 						setValue={setValue}
