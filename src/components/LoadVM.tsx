@@ -10,8 +10,6 @@ const sender = 0xc0dec0de;
 const address = 0xcafebabe;
 
 let code;
-const events = [];
-const states = [];
 
 export const LoadVM = () => {
 	const [executed, setExecuted] = useState(false);
@@ -41,7 +39,6 @@ export const LoadVM = () => {
 			});
 		});
 	}, []);
-	console.log(states);
 	return (
 		<div>
 			{!executed && <p>loading...</p>}
@@ -57,11 +54,7 @@ export const LoadVM = () => {
 					</div>
 
 					<div className="mt-5 flex w-full flex-col items-center gap-5">
-						{states.map(state => (
-							<div>
-								<DisplayJson data={state} />
-							</div>
-						))}
+						<DisplayJson data={states} />
 					</div>
 				</>
 			)}
