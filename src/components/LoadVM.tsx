@@ -1,4 +1,4 @@
-import init, { vm_instantiate, vm_query } from 'cosmwebwasm';
+import init, { vm_execute, vm_instantiate, vm_query } from 'cosmwebwasm';
 import { useCallback, useEffect, useState } from 'react';
 import { DisplayJson } from '@/components/common/DisplayJson';
 import { cloneDeep, reverse } from 'lodash';
@@ -106,6 +106,26 @@ const getCode = async pushState => {
 			checkpoints: [10000000000000],
 		},
 	});
+};
+
+const execute = (pushState, pushEvent, states, obj) => {
+	try {
+		const { state: rawState, events: rawEvents } = vm_execute(
+			sender,
+			address,
+			[],
+			JSON.stringify(states[states.length - 1]),
+			code,
+			JSON.stringify(JSON.parse(obj))
+		);
+
+		normalize(rawState);
+		pushState(rawState);
+		pushEvent(rawEvents);
+	} catch (ex) {
+		console.log('probably invalid json ser');
+		console.error(ex);
+	}
 };
 
 const instantiate = (pushState, pushEvent, states) => {
