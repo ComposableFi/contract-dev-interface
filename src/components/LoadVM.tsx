@@ -1,6 +1,7 @@
 import init, { vm_instantiate, vm_query } from 'cosmwebwasm';
 import { useCallback, useEffect, useState } from 'react';
 import { DisplayJson } from '@/components/common/DisplayJson';
+import { cloneDeep, reverse } from 'lodash';
 
 let loaded = false;
 const run = false;
@@ -19,14 +20,14 @@ export const LoadVM = () => {
 	const pushState = newState => {
 		setStates(prevState => {
 			prevState.push(newState);
-			return prevState;
+			return [...prevState];
 		});
 	};
 
 	const pushEvent = useCallback(newState => {
 		setEvents(prevState => {
 			prevState.push(newState);
-			return prevState;
+			return [...prevState];
 		});
 	}, []);
 
@@ -39,6 +40,8 @@ export const LoadVM = () => {
 			});
 		});
 	}, []);
+
+	console.log(states);
 	return (
 		<div>
 			{!executed && <p>loading...</p>}
@@ -54,12 +57,33 @@ export const LoadVM = () => {
 					</div>
 
 					<div className="mt-5 flex w-full flex-col items-center gap-5">
-						<DisplayJson data={states} />
+						{reverse(
+							cloneDeep(states).map((state, i) => (
+								<div key={i}>
+									<DisplayJson data={parseState(state)} />
+								</div>
+							))
+						)}
 					</div>
 				</>
 			)}
 		</div>
 	);
+};
+
+const parseState = state => {
+	state.storage = Object.fromEntries(
+		Object.entries(state.storage).map(([k, v]) => [
+			k,
+			{
+				data: Object.fromEntries(
+					Object.entries(v.data).map(([k, v]) => [hex_to_ascii(k), JSON.parse(String.fromCharCode(...v))])
+				),
+				iterators: v.iterators,
+			},
+		])
+	);
+	return state;
 };
 
 const getCode = async pushState => {
@@ -147,4 +171,12 @@ function normalize(state) {
 
 function log(x) {
 	console.log(JSON.stringify(x, null, 4));
+}
+function hex_to_ascii(str1) {
+	const hex = str1.toString();
+	let str = '';
+	for (let n = 0; n < hex.length; n += 2) {
+		str += String.fromCharCode(parseInt(hex.substr(n, 2), 16));
+	}
+	return str;
 }
