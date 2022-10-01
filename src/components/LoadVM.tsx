@@ -2,6 +2,7 @@ import init, { vm_execute, vm_instantiate, vm_query } from 'cosmwebwasm';
 import { useEffect, useState } from 'react';
 import { DisplayJson } from '@/components/common/DisplayJson';
 import { cloneDeep, reverse } from 'lodash';
+import { useAutoAnimate } from '@formkit/auto-animate/react';
 
 let loaded = false;
 const run = false;
@@ -16,6 +17,8 @@ export const LoadVM = () => {
 	const [executed, setExecuted] = useState(false);
 	const [states, setStates] = useState([]);
 	const [events, setEvents] = useState([]);
+	const [ref] = useAutoAnimate<HTMLDivElement>();
+	const [ref2] = useAutoAnimate<HTMLDivElement>();
 
 	const pushState = newState => {
 		setStates(prevState => {
@@ -44,9 +47,9 @@ export const LoadVM = () => {
 			{!executed && <p>loading...</p>}
 			{executed && (
 				<>
-					<div className="flex items-center gap-4">
+					<div className="flex items-center justify-center gap-4">
 						<button
-							className="rounded-xl border-explore p-4"
+							className="rounded-xl border border-explore p-4 transition-opacity duration-200 hover:opacity-80"
 							onClick={() =>
 								instantiate(pushState, pushEvent, states, {
 									name: 'Picasso',
@@ -63,7 +66,7 @@ export const LoadVM = () => {
 							<p>INSTANTIATE</p>
 						</button>
 						<button
-							className="rounded-xl border-explore p-4"
+							className="rounded-xl border border-explore p-4 transition-opacity duration-200 hover:opacity-80"
 							onClick={() =>
 								execute(pushState, pushEvent, states, {
 									mint: {
@@ -74,12 +77,17 @@ export const LoadVM = () => {
 							}>
 							<p>EXECUTE</p>
 						</button>
-						<button className="rounded-xl border-explore p-4" onClick={() => getTokenInfo(states)}>
+						<button
+							className="rounded-xl border border-explore p-4 transition-opacity duration-200 hover:opacity-80"
+							onClick={() => getTokenInfo(states)}>
 							<p>QUERY</p>
 						</button>
 					</div>
-					<div className="grid w-full grid-cols-2 px-4">
-						<div className="mt-5 flex w-full flex-col items-center gap-5">
+					<div className="grid w-full grid-cols-[1fr,fit-content(100%)] gap-2">
+						<div
+							ref={ref}
+							className="mt-5 flex w-full w-full min-w-[500px] flex-col items-center gap-5 rounded-xl border border-hexplore px-8 py-5">
+							<p className="w-full text-center font-metropolis text-[20px]">State Updates</p>
 							{reverse(
 								cloneDeep(states).map((state, i) => (
 									<div key={`state_${i}`}>
@@ -88,7 +96,10 @@ export const LoadVM = () => {
 								))
 							)}
 						</div>
-						<div className="mt-5 flex w-full flex-col items-center gap-5">
+						<div
+							ref={ref2}
+							className="mt-5 flex h-fit w-full w-full min-w-[419px] flex-col items-center gap-5 rounded-xl border border-hexplore px-8 py-5">
+							<p className="w-full text-center font-metropolis text-[20px]">Latest Event</p>
 							{reverse(
 								cloneDeep(events).map((event, i) => (
 									<div key={`event_${i}`}>
@@ -96,6 +107,7 @@ export const LoadVM = () => {
 									</div>
 								))
 							)}
+							{events.length === 0 && <p>Empty Ser</p>}
 						</div>
 					</div>
 				</>
