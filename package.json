@@ -58,7 +58,7 @@
     "eslint-plugin-unused-imports": "^2.0.0",
     "import-sort-style-module": "^6.0.0",
     "import-sort-style-react": "^5.1.0",
-    "postcss": "^8.4.16",
+    "postcss": "^8.4.31",
     "prettier": "^2.7.1",
     "prettier-plugin-tailwindcss": "^0.1.13",
     "sass": "^1.55.0",
